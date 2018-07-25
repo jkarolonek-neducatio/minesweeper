@@ -12,15 +12,47 @@ class Board {
 
   createBoard() {
     const collection = [];
+    let correctFlags = 10;
     for (let i = 0; i < this.size; i++) {
-        let collectionRow = [];
-        for(let j = 0; j < this.size; j++) {
-            let fieldContainer = document.createElement('BUTTON');
-            let tempField = new Field(fieldContainer, 'unclicked', i, j);
-            this.view.appendChild(tempField.view);
-            collectionRow.push(tempField);
+      let collectionRow = [];
+      for(let j = 0; j < this.size; j++) {
+          let fieldContainer = document.createElement('BUTTON');
+          let field = new Field(fieldContainer, 'unclicked', i, j);
+          this.view.appendChild(field.view);
+          collectionRow.push(field);
+          field.view.classList.add(field.state);
+
+          function fieldStateChange(state) {
+            field.view.classList.remove(field.state);
+            field.state = state;
+            field.view.classList.add(field.state);
+          }
+
+          field.view.addEventListener('click', function() {
+            fieldStateChange('clicked');
+            if (field.state === 'clicked' && field.value === 9) {
+              this.state = 'lost';
+              this.view.classList.add('game-lost');
+            }
+            console.log(this.state);
+          }.bind(this));
+
+          field.view.addEventListener('contextmenu', function(event) {
+            event.preventDefault();
+            fieldStateChange('flagged');
+            if (field.state === 'flagged' && field.value === 9) {
+              correctFlags--;
+            }
+            if(correctFlags === 0) {
+              this.state = 'won';
+              this.view.classList.add('game-won');
+            }
+            console.log(correctFlags);
+            console.log(this.state)
+            return false;
+          }.bind(this));
         }
-        collection.push(collectionRow);
+      collection.push(collectionRow);
     }
     this.collection = collection;
   }
@@ -76,8 +108,7 @@ class Board {
     for(let x = 0; x < this.size; x++) {
       for(let y = 0; y < this.size; y++) {
         let viewButton = this.collection[x][y].view;
-        console.log(viewButton);
-        viewButton.innerHTML = this.collection[x][y].value;
+        viewButton.setAttribute('value', this.collection[x][y].value);
       }
     }
   }
