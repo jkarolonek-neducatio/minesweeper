@@ -5,6 +5,9 @@ class Field {
     this.x = x;
     this.y = y;
     this.value = value;
+    this.view.setAttribute('data-x', x);
+    this.view.setAttribute('data-y', y);
+    this.checked = false;
   }
 }
 

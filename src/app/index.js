@@ -5,7 +5,8 @@ require('./modules/field.js');
 document.addEventListener("DOMContentLoaded", function(event) {
 
 const boardSize = 9;
+const bombCount = 10;
 const boardContainer = document.querySelector(".board-container");
-const board = new Board(boardContainer, boardSize);
+const board = new Board(boardContainer, boardSize, bombCount);
 
 });
