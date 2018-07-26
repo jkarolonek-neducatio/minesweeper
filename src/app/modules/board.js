@@ -49,7 +49,7 @@ class Board {
       const tile = this.collection[x][y];
       if (tile.checked === true) return;
 
-      tile.checked === true;
+      tile.checked = true;
       this.fieldStateChange(tile, 'clicked');
       if (tile.value === 0) {
 
@@ -122,7 +122,12 @@ class Board {
   onContextMenu = (event) => {
     const field = this.getField(event);
     event.preventDefault();
-    this.fieldStateChange(field, 'flagged');
+    
+    if (field.state === 'unclicked') {
+      this.fieldStateChange(field, 'flagged');
+    } else if (field.state === 'flagged') {
+      this.fieldStateChange(field, 'unclicked');
+    }
     console.log(this.state)
     return false;
   }
