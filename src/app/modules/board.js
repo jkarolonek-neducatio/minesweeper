@@ -5,15 +5,24 @@ class Board {
     this.size = size;
     this.bombs = bombs;
     this.state = 'initial';
+    this.firstClick = false;
     this.createBoard();
-    this.randomizeBombs();
-    this.assignHints();
-    this.displayValues();
+    // this.randomizeBombs();
+    // this.assignHints();
+    // this.displayValues();
   }
 
 
   onClick = (event) => {
       const field = this.getField(event);
+      if (this.firstClick === false) {
+          this.firstClick = true;
+          do {
+              this.randomizeBombs();
+              this.assignHints();
+              this.displayValues();
+          } while (field.value === 9);
+      }
       this.fieldEmptyCheck(field.x, field.y);
       this.fieldStateChange(field, 'clicked');
       this.gameLost(field);
