@@ -50,31 +50,33 @@ class Board {
       if (tile.checked === true) return;
 
       tile.checked = true;
-      this.fieldStateChange(tile, 'clicked');
-      if (tile.value === 0) {
+      if (tile.state !== 'flagged') {
+        this.fieldStateChange(tile, 'clicked');
+      }
+      if (tile.value === 0 && tile.state !== 'flagged') {
 
-        if (x - 1 >= 0 && y - 1 >= 0 && x - 1 < this.size && y - 1 < this.size) {
+        if (x - 1 >= 0 && y - 1 >= 0 && x - 1 < this.size && y - 1 < this.size && this.collection[x - 1][y - 1].state !== 'flagged') {
           this.fieldStateChange(this.collection[x - 1][y - 1], 'clicked');
         }
-        if (x - 1 >= 0 && y >= 0 && x - 1 < this.size && y < this.size) {
+        if (x - 1 >= 0 && y >= 0 && x - 1 < this.size && y < this.size && this.collection[x - 1][y].state !== 'flagged') {
           this.fieldStateChange(this.collection[x - 1][y], 'clicked');
         }
-        if (x - 1 >= 0 && y + 1 >= 0 && x - 1 < this.size && y + 1 < this.size) {
+        if (x - 1 >= 0 && y + 1 >= 0 && x - 1 < this.size && y + 1 < this.size && this.collection[x - 1][y + 1].state !== 'flagged') {
           this.fieldStateChange(this.collection[x - 1][y + 1], 'clicked');
         }
-        if (x >= 0 && y - 1 >= 0 && x < this.size && y - 1 < this.size) {
+        if (x >= 0 && y - 1 >= 0 && x < this.size && y - 1 < this.size && this.collection[x][y - 1].state !== 'flagged') {
           this.fieldStateChange(this.collection[x][y - 1], 'clicked');
         }
-        if (x >= 0 && y + 1 >= 0 && x < this.size && y + 1 < this.size) {
+        if (x >= 0 && y + 1 >= 0 && x < this.size && y + 1 < this.size && this.collection[x][y + 1].state !== 'flagged') {
           this.fieldStateChange(this.collection[x][y + 1], 'clicked');
         }
-        if (x + 1 >= 0 && y - 1 >= 0 && x + 1 < this.size && y - 1 < this.size) {
+        if (x + 1 >= 0 && y - 1 >= 0 && x + 1 < this.size && y - 1 < this.size && this.collection[x + 1][y - 1].state !== 'flagged') {
           this.fieldStateChange(this.collection[x + 1][y - 1], 'clicked');
         }
-        if (x + 1 >= 0 && y >= 0 && x + 1 < this.size && y < this.size) {
+        if (x + 1 >= 0 && y >= 0 && x + 1 < this.size && y < this.size && this.collection[x + 1][y].state !== 'flagged') {
           this.fieldStateChange(this.collection[x + 1][y], 'clicked');
         }
-        if (x + 1 >= 0 && y + 1 >= 0 && x + 1 < this.size && y + 1 < this.size) {
+        if (x + 1 >= 0 && y + 1 >= 0 && x + 1 < this.size && y + 1 < this.size && this.collection[x + 1][y + 1].state !== 'flagged') {
           this.fieldStateChange(this.collection[x + 1][y + 1], 'clicked');
         }
 
