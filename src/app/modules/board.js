@@ -7,9 +7,6 @@ class Board {
     this.state = 'initial';
     this.firstClick = false;
     this.createBoard();
-    // this.randomizeBombs();
-    // this.assignHints();
-    // this.displayValues();
   }
 
 
@@ -18,6 +15,11 @@ class Board {
       if (this.firstClick === false) {
           this.firstClick = true;
           do {
+              for (let x = 0; x < this.size; x++) {
+                  for (let y = 0; y < this.size; y++) {
+                      this.collection[x][y].value = 0;
+                  }
+              }
               this.randomizeBombs();
               this.assignHints();
               this.displayValues();
