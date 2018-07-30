@@ -1,9 +1,10 @@
 import Field from './field';
 class Board {
-  constructor(view, size, bombs) {
+  constructor(view, bombs, width, height) {
     this.view = view;
-    this.size = size;
     this.bombs = bombs;
+    this.width = width;
+    this.height = height;
     this.state = 'initial';
     this.firstClick = false;
     this.createBoard();
@@ -15,8 +16,8 @@ class Board {
       if (this.firstClick === false) {
           this.firstClick = true;
           do {
-              for (let x = 0; x < this.size; x++) {
-                  for (let y = 0; y < this.size; y++) {
+              for (let x = 0; x < this.height; x++) {
+                  for (let y = 0; y < this.width; y++) {
                       this.collection[x][y].value = 0;
                   }
               }
@@ -28,23 +29,7 @@ class Board {
       this.fieldEmptyCheck(field.x, field.y);
       this.fieldStateChange(field, 'clicked');
       this.gameLost(field);
-
-      let checked = 0;
-
-      for (let x = 0; x < this.size; x++) {
-          for (let y = 0; y < this.size; y++) {
-              const f = this.collection[x][y];
-              if (f.state === 'clicked') {
-                  checked++;
-              }
-          }
-      }
-      console.log(this.collection);
-      if (checked === (this.size * this.size) - this.bombs) {
-          this.state = 'won';
-          this.view.classList.add('game-won');
-      }
-      console.log(this.state);
+      this.gameWon();
   }
 
   onContextMenu = (event) => {
@@ -63,20 +48,21 @@ class Board {
   onDoubleClick = (event) => {
     const field = this.getField(event);
     this.revealAround(field.x, field.y);
+    this.gameWon();
   }
 
   createBoard() {
     const collection = [];
-    for (let i = 0; i < this.size; i++) {
+    for (let i = 0; i < this.height; i++) {
       let collectionRow = [];
-      for(let j = 0; j < this.size; j++) {
+      for(let j = 0; j < this.width; j++) {
           let fieldContainer = document.createElement('BUTTON');
           let field = new Field(fieldContainer, 'unclicked', i, j);
           this.view.appendChild(field.view);
           collectionRow.push(field);
           field.view.classList.add(field.state);
 
-          field.view.addEventListener('click', this.onClick)
+          field.view.addEventListener('click', this.onClick);
 
           field.view.addEventListener('contextmenu', this.onContextMenu);
 
@@ -87,11 +73,43 @@ class Board {
     this.collection = collection;
   }
 
+  removeBoard() {
+      for (let i = 0; i < this.height; i++) {
+          for (let j = 0; j < this.width; j++) {
+              const {view} = this.collection[i][j];
+              view.removeEventListener('click', this.onClick);
+
+              view.removeEventListener('contextmenu', this.onContextMenu);
+
+              view.removeEventListener('dblclick', this.onDoubleClick);
+              this.view.removeChild(this.collection[i][j].view);
+          }
+      }
+  }
+
   gameLost(field) {
     if (field.state === 'clicked' && field.value === 9) {
         this.state = 'lost';
         this.view.classList.add('game-lost');
     }
+  }
+
+  gameWon() {
+      let checked = 0;
+
+      for (let x = 0; x < this.height; x++) {
+          for (let y = 0; y < this.width; y++) {
+              const f = this.collection[x][y];
+              if (f.state === 'clicked') {
+                  checked++;
+              }
+          }
+      }
+      console.log(this.collection);
+      if (checked === this.width * this.height - this.bombs) {
+          this.state = 'won';
+          this.view.classList.add('game-won');
+      }
   }
 
   getField(event) {
@@ -108,11 +126,11 @@ class Board {
   }
 
   isInBounds(x,y) {
-    return x >= 0 && y >= 0 && x < this.size && y < this.size;
+    return x >= 0 && y >= 0 && x < this.height && y < this.width;
   }
 
   fieldEmptyCheck(x, y) {
-    if (x >= 0 && y >= 0 && x < this.size && y < this.size) {
+    if (x >= 0 && y >= 0 && x < this.height && y < this.width) {
       const tile = this.collection[x][y];
       if (tile.checked === true) return;
 
@@ -235,8 +253,8 @@ class Board {
     let bombsToDraw = this.bombs;
     do {
       let bombPlaced = 9;
-      let randomX = Math.floor(Math.random() * (this.size));
-      let randomY = Math.floor(Math.random() * (this.size));
+      let randomX = Math.floor(Math.random() * (this.height));
+      let randomY = Math.floor(Math.random() * (this.width));
       let randomElement = this.collection[randomX][randomY];
       if (bombPlaced !== randomElement.value) {
         randomElement.value = 9;
@@ -247,8 +265,8 @@ class Board {
   }
 
   assignHints() {
-    for(let x = 0; x < this.size; x++) {
-      for(let y = 0; y < this.size; y++) {
+    for(let x = 0; x < this.height; x++) {
+      for(let y = 0; y < this.width; y++) {
         if (this.collection[x][y].value === 9) {
           continue;
         }
@@ -282,8 +300,8 @@ class Board {
   }
 
   displayValues() {
-    for(let x = 0; x < this.size; x++) {
-      for(let y = 0; y < this.size; y++) {
+    for(let x = 0; x < this.height; x++) {
+      for(let y = 0; y < this.width; y++) {
         let viewButton = this.collection[x][y].view;
         viewButton.setAttribute('data-value', this.collection[x][y].value);
       }
