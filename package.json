@@ -6,10 +6,12 @@
   "license": "MIT",
   "devDependencies": {
     "babel-core": "^6.26.3",
+    "babel-eslint": "^8.2.6",
     "babel-loader": "^7.1.5",
     "babel-plugin-transform-class-properties": "^6.24.1",
     "babel-preset-env": "^1.7.0",
     "css-loader": "^1.0.0",
+    "eslint-config-nedu-base": "github:n-educatio/eslint-config-nedu-base",
     "html-webpack-plugin": "^3.2.0",
     "node-sass": "^4.9.2",
     "sass-loader": "^7.0.3",
@@ -19,6 +21,11 @@
     "webpack-dev-server": "^3.1.5"
   },
   "scripts": {
-    "start": "webpack-dev-server --history-api-fallback --inline --progress"
+    "start": "webpack-dev-server --history-api-fallback --inline --progress",
+    "lint": "eslint . --fix"
+  },
+  "dependencies": {
+    "eslint": "^5.2.0",
+    "eslint-plugin-import": "^2.13.0"
   }
 }
