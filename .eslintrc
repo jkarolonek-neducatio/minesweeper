@@ -2,5 +2,6 @@
   "extends": "eslint-config-nedu-base",
   "env": {
     "browser": true
-  }
+  },
+  "parser": "babel-eslint"
 }

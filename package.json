@@ -2,8 +2,9 @@
   "name": "minesweeper",
   "version": "1.0.0",
   "main": "index.js",
-  "author": "jkarolonek",
+  "author": "Jędrzej Karolonek <jkarolonek@n-educatio.pl>",
   "license": "MIT",
+  "repo": "https://github.com/jkarolonek-neducatio/minesweeper",
   "devDependencies": {
     "babel-core": "^6.26.3",
     "babel-eslint": "^8.2.6",

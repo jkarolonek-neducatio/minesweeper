@@ -1,7 +1,7 @@
 import '../style/app.scss';
 import Board from './modules/board';
 
-document.addEventListener('DOMContentLoaded', (event) => {
+document.addEventListener('DOMContentLoaded', () => {
   const boardContainer = document.querySelector('.board-container');
   const { style } = document.documentElement;
   let bombCount = 10;
