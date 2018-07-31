@@ -97,6 +97,11 @@ class Board {
     if (field.state === 'clicked' && field.value === 9) {
       this.state = 'lost';
       this.view.classList.add('game-lost');
+      for (let x = 0; x < this.height; x += 1) {
+        for (let y = 0; y < this.width; y += 1) {
+          Board.fieldStateChange(this.collection[x][y], 'clicked');
+        }
+      }
     }
   }
 
