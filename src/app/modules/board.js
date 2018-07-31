@@ -14,6 +14,9 @@ class Board {
 
   onClick = (event) => {
     const field = this.getField(event);
+    if (field.state === 'flagged') {
+      return false;
+    }
     if (this.firstClick === false) {
       this.firstClick = true;
       do {
@@ -36,7 +39,6 @@ class Board {
   onContextMenu = (event) => {
     const field = this.getField(event);
     event.preventDefault();
-
     if (field.state === 'unclicked') {
       Board.fieldStateChange(field, 'flagged');
     } else if (field.state === 'flagged') {
@@ -47,6 +49,9 @@ class Board {
 
   onDoubleClick = (event) => {
     const field = this.getField(event);
+    if (field.state === 'flagged') {
+      return false;
+    }
     this.revealAround(field.x, field.y);
     this.gameWon();
   }
