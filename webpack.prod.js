@@ -27,7 +27,7 @@ module.exports = merge(common, {
       {
         test: /\.(sass|scss)$/,
         use: [{
-          loader: 'style-loader', // creates style nodes from JS strings
+          loader: MiniCssExtractPlugin.loader,
         }, {
           loader: 'css-loader', // translates CSS into CommonJS
         }, {
@@ -39,13 +39,6 @@ module.exports = merge(common, {
         use: [
           MiniCssExtractPlugin.loader,
           'css-loader',
-        ],
-      },
-      {
-        test: /\.js$/,
-        use: 'babel-loader',
-        exclude: [
-          /node_modules/,
         ],
       },
     ],
