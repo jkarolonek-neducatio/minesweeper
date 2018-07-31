@@ -83,6 +83,7 @@ class Board {
 
         view.removeEventListener('dblclick', this.onDoubleClick);
         this.view.removeChild(this.collection[i][j].view);
+        this.gameReset();
       }
     }
   }
@@ -109,6 +110,12 @@ class Board {
       this.state = 'won';
       this.view.classList.add('game-won');
     }
+  }
+
+  gameReset() {
+    this.state = 'initial';
+    this.view.classList.remove('game-won');
+    this.view.classList.remove('game-lost');
   }
 
   getField(event) {
