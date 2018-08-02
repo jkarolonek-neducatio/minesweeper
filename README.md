@@ -1,4 +1,4 @@
-##Minesweeper
+## Minesweeper
 
 This a minesweeper game written in vanilla js, for a mentoring program at my workplace.
 
