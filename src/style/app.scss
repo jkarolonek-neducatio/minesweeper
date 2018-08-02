@@ -3,10 +3,14 @@
   --height: 9;
   --tile-size: 30px;
 }
+body {
+  overflow: scroll;
+}
 .wrapper {
-  display: flex;
-  align-items: flex-start;
+  display: inline-block;
   .board-container {
+    display: inline-block;
+    vertical-align: top;
     width: calc(var(--width) * var(--tile-size));
     position: relative;
     button {
@@ -99,6 +103,12 @@
     margin-right: 20px;
     .diff-form {
       margin-bottom: 10px;
+    }
+  }
+  .custom-size {
+    margin-top: 20px;
+    input {
+      max-width: 100px;
     }
   }
 }
